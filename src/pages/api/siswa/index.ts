@@ -26,7 +26,7 @@ export default async function handler(
           Nis,
         },
       });
-      
+
       if (nis) {
         return res.status(400).send({
           message: "nis sudh ada ",
@@ -78,6 +78,12 @@ export default async function handler(
     const { id } = req.body;
     try {
       const siswa = await prisma.siswa.delete({
+        where: {
+          ID: id,
+        },
+      });
+
+      const absen = await prisma.absensi.delete({
         where: {
           ID: id,
         },
