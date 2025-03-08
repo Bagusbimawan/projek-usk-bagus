@@ -31,6 +31,7 @@ model user  {
 
 model absensi {
   ID Int @id @default(autoincrement())
+  Nis Int 
   masuk DateTime @default(now())
   keterangan String @db.Text
   terlambat String @db.Text

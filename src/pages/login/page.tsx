@@ -38,7 +38,7 @@ const Login = () => {
             text: "Berhasil Login Sebagai Admin",
             icon: "success",
           });
-          router.push("/admin");
+          router.push("/admin/absensi");
         } else {
           router.push("/guest");
           Swal.fire({

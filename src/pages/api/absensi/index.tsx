@@ -41,6 +41,7 @@ export default async function handler(
           point,
           sanksi,
           Idsiswa: siswa.ID,
+          Nis: nis,
         },
       });
 
@@ -85,7 +86,7 @@ export default async function handler(
           ID: id,
         },
       });
-
+        
       res.status(200).send({
         message: "Delete Succes",
       });
