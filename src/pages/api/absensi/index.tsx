@@ -9,13 +9,15 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       const absen = await prisma.absensi.findMany();
-      res.send({
+      res.status(200).send({
         message: "fetch succes absen",
         data: absen,
       });
     } catch (error) {
-      res.send({
+      console.error("Error fetching absensi:", error);
+      res.status(500).send({
         message: "internal server error",
+        error: error instanceof Error ? error.message : String(error)
       });
     }
   } else if (req.method === "POST") {
@@ -50,8 +52,10 @@ export default async function handler(
         data: absen,
       });
     } catch (error) {
+      console.error("Error creating absensi:", error);
       res.status(500).send({
         message: "internal server error",
+        error: error instanceof Error ? error.message : String(error)
       });
     }
   } else if (req.method === "PUT") {
@@ -74,8 +78,10 @@ export default async function handler(
         data: absen,
       });
     } catch (error) {
+      console.error("Error updating absensi:", error);
       res.status(500).send({
         message: "internal server error",
+        error: error instanceof Error ? error.message : String(error)
       });
     }
   } else if (req.method === "DELETE") {
@@ -91,8 +97,10 @@ export default async function handler(
         message: "Delete Succes",
       });
     } catch (error) {
+      console.error("Error deleting absensi:", error);
       res.status(500).send({
         message: "internal server error",
+        error: error instanceof Error ? error.message : String(error)
       });
     }
   }

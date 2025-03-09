@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import { parse } from "path";
 const prisma = new PrismaClient();
 
 export default async function handler(
@@ -77,23 +78,41 @@ export default async function handler(
   } else if (req.method === "DELETE") {
     const { id } = req.body;
     try {
-      const siswa = await prisma.siswa.delete({
+      // First check if the siswa exists
+      const existingSiswa = await prisma.siswa.findUnique({
         where: {
-          ID: id,
+          ID: parseInt(id),
         },
       });
 
-      const absen = await prisma.absensi.delete({
+      if (!existingSiswa) {
+        return res.status(404).send({
+          message: "Siswa not found",
+        });
+      }
+
+      // await prisma.absensi.updateMany({
+      //   where: {
+      //     ID: parseInt(id),
+      //   },
+      //   data: {
+      //     Idsiswa: null,
+      //   },
+      // });
+      // Then delete the siswa record
+      await prisma.siswa.delete({
         where: {
-          ID: id,
+          ID: parseInt(id),
         },
       });
+
       res.status(200).send({
-        message: "succes delete",
+        message: "Success delete siswa and related absensi records",
       });
     } catch (error) {
+      console.error("Delete error:", error);
       res.status(500).send({
-        message: "internal server error",
+        message: "Internal server error",
       });
     }
   }

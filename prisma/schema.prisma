@@ -37,6 +37,6 @@ model absensi {
   terlambat String @db.Text
   point Int 
   sanksi String @db.Text
-  Idsiswa Int 
-  siswa siswa @relation(fields: [Idsiswa], references: [ID])
+  Idsiswa Int? 
+  siswa siswa? @relation(fields: [Idsiswa], references: [ID], onDelete: Cascade)
 }
